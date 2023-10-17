@@ -39,13 +39,13 @@ const Index = () => {
 
   return (
     <main className="my-40">
-      <section className="w-4/5 flex justify-around m-auto">
+      <section className="sm:w-11/12 w-4/5 flex justify-around m-auto">
         <article className="w-full">
           <div
             className={`${
               isValidURL && !warning
-                ? "max-w-2xl h-80 rounded-2xl border-transparent border-4 px-4 mx-auto"
-                : "max-w-2xl h-80 rounded-2xl border-dashed border-slate-800 border-4 p-4 mx-auto"
+                ? "sm:w-10/12 max-w-2xl w-11/12 h-80 rounded-2xl border-transparent border-4 px-4 mx-auto"
+                : "sm:w-10/12 max-w-2xl w-11/12 h-80 rounded-2xl border-dashed border-slate-800 border-4 p-4 mx-auto"
             }`}
           >
             {isValidURL && !warning ? (
@@ -61,14 +61,14 @@ const Index = () => {
 
         <article className="w-full h-auto">
           <div
-            className={`w-8/12 ${
+            className={`sm:w-10/12 max-w-screen-sm	 w-8/12 ${
               isTextareaVisible ? "h-full" : ""
             } flex justify-between flex-col rounded-2xl border-solid border-indigo-950 bg-indigo-950 border-4 p-4`}
           >
-            <div className="w-full flex justify-between gap-4">
+            <div className=" w-full flex justify-between gap-4">
               <input
                 type="text"
-                className={`w-9/12 h-fit py-3 px-4 border ${
+                className={`sm:w-8/12 w-9/12 h-fit py-3 px-4 border ${
                   warning ? "border-red-500" : "border-slate-600"
                 } rounded-md focus:outline-none bg-transparent text-slate-400`}
                 placeholder="Cole a URL do Youtube aqui"
@@ -76,7 +76,7 @@ const Index = () => {
               />
 
               <button
-                className="w-3/12 h-fit bg-indigo-700 text-white py-3 px-4 rounded-md"
+                className="sm:w-4/12 w-3/12 h-fit bg-indigo-700 text-white py-3 px-4 rounded-md"
                 onClick={handleGenerateSummary}
               >
                 Gerar resumo
