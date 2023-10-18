@@ -44,12 +44,12 @@ const Index = () => {
           <div
             className={`${
               isValidURL && !warning
-                ? "sm:w-10/12 sm:mt-0 md:pt-0 lg:w-full lg:items-start max-w-2xl h-80 rounded-2xl border-transparent border-4 pt-4 mx-auto"
-                : "sm:w-10/12 sm:mt-0 md:pt-0 md:mt-0 lg:w-full lg:items-start lg:mt-0 max-w-2xl h-80 rounded-2xl border-dashed border-slate-800 border-4 pt-4 mt-6 mx-auto"
+                ? "sm:w-10/12 sm:mt-0 md:pt-0 lg:w-full lg:items-start 2xl:pl-7 max-w-2xl h-96 rounded-2xl border-none border-4 pt-4 mx-auto"
+                : "sm:w-10/12 sm:mt-0 md:pt-0 md:mt-0 lg:w-full lg:items-start lg:mt-0 max-w-2xl h-96 rounded-2xl border-dashed border-slate-800 border-4 pt-4 mt-6 mx-auto"
             }`}
           >
             {isValidURL && !warning ? (
-              <div className="w-full max-w-2xl lg:justify-start lg:-ml-5 h-80 rounded-2xl overflow-hidden">
+              <div className="w-full max-w-2xl lg:justify-start h-96 rounded-2xl overflow-hidden">
                 <YouTube
                   videoId={inputValue.replace("https://youtu.be/", "")}
                   opts={opts}
@@ -65,10 +65,10 @@ const Index = () => {
               isTextareaVisible ? "h-full" : ""
             } flex justify-between flex-col rounded-2xl border-solid border-indigo-950 bg-indigo-950 border-4 p-4`}
           >
-            <div className=" w-full flex justify-between gap-4">
+            <div className="sm:flex-row w-full flex flex-col justify-between gap-4">
               <input
                 type="text"
-                className={`sm:w-8/12 w-9/12 h-fit py-3 px-4 border ${
+                className={`sm:w-8/12 w-full h-fit py-3 px-4 border ${
                   warning ? "border-red-500" : "border-slate-600"
                 } rounded-md focus:outline-none bg-transparent text-slate-400`}
                 placeholder="Cole a URL do Youtube aqui"
@@ -76,7 +76,7 @@ const Index = () => {
               />
 
               <button
-                className="sm:w-4/12 w-3/12 h-fit bg-indigo-700 text-white py-3 px-4 rounded-md"
+                className="sm:w-4/12 w-full h-fit bg-indigo-700 text-white py-3 px-4 rounded-md"
                 onClick={handleGenerateSummary}
               >
                 Gerar resumo
@@ -84,15 +84,14 @@ const Index = () => {
             </div>
             {isTextareaVisible && (
               <textarea
-                name=""
-                id=""
+                name="textareaContent"
+                id="textareaContent"
                 cols={30}
                 rows={10}
                 readOnly
                 className="bg-transparent mt-6 resize-none focus:outline-none text-slate-400 pr-4 text-justify"
-              >
-                {summaryContent}
-              </textarea>
+                defaultValue={summaryContent}
+              ></textarea>
             )}
             {isValidURL && !warning ? (
               <CopyToClipboard
