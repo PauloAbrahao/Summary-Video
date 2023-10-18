@@ -38,18 +38,18 @@ const Index = () => {
   };
 
   return (
-    <main className="my-40">
-      <section className="sm:w-11/12 w-4/5 flex justify-around m-auto">
-        <article className="w-full">
+    <main className="px-5 sm:px-0 md:px-0 lg:px-0 2xl:my-40 my-20">
+      <section className="sm:w-11/12 sm:flex-col-reverse lg:flex-row lg:gap-8 2xl:w-3/5 flex flex-col-reverse justify-around m-auto">
+        <article className="w-full lg:w-6/12">
           <div
             className={`${
               isValidURL && !warning
-                ? "sm:w-10/12 max-w-2xl w-11/12 h-80 rounded-2xl border-transparent border-4 px-4 mx-auto"
-                : "sm:w-10/12 max-w-2xl w-11/12 h-80 rounded-2xl border-dashed border-slate-800 border-4 p-4 mx-auto"
+                ? "sm:w-10/12 sm:mt-0 md:pt-0 lg:w-full lg:items-start max-w-2xl h-80 rounded-2xl border-transparent border-4 pt-4 mx-auto"
+                : "sm:w-10/12 sm:mt-0 md:pt-0 md:mt-0 lg:w-full lg:items-start lg:mt-0 max-w-2xl h-80 rounded-2xl border-dashed border-slate-800 border-4 pt-4 mt-6 mx-auto"
             }`}
           >
             {isValidURL && !warning ? (
-              <div className="max-w-2xl h-80 rounded-2xl overflow-hidden">
+              <div className="w-full max-w-2xl lg:justify-start lg:-ml-5 h-80 rounded-2xl overflow-hidden">
                 <YouTube
                   videoId={inputValue.replace("https://youtu.be/", "")}
                   opts={opts}
@@ -59,9 +59,9 @@ const Index = () => {
           </div>
         </article>
 
-        <article className="w-full h-auto">
+        <article className="w-full lg:w-6/12 h-auto">
           <div
-            className={`sm:w-10/12 max-w-screen-sm	 w-8/12 ${
+            className={`sm:w-10/12 sm:m-auto sm:mb-8 lg:w-full max-w-screen-sm  ${
               isTextareaVisible ? "h-full" : ""
             } flex justify-between flex-col rounded-2xl border-solid border-indigo-950 bg-indigo-950 border-4 p-4`}
           >

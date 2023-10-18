@@ -5,7 +5,7 @@ import Main from "./components/Main";
 
 function App() {
   return (
-    <div className="bg-primary p-10 max-w-full h-screen">
+    <div className="bg-primary py-10 2xl:p-10 max-w-full h-screen lg:h-screen">
       <Header />
       <Main />
     </div>
