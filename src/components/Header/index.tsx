@@ -2,7 +2,7 @@ import { LuListVideo } from "react-icons/lu";
 
 const index = () => {
   return (
-    <header className="">
+    <header className="top-0">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-center lg:px-8"
         aria-label="Global"

@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="bg-primary py-10 min-h-screen sm:h-screen 2xl:p-10">
+    <div className="box-border bg-primary py-10 min-h-screen sm:h-screen">
       <Header />
       <Main />
       <Footer />
