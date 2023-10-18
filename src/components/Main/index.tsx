@@ -1,5 +1,7 @@
 import React, { ChangeEvent } from "react";
 
+import axios from "axios";
+
 import YouTube from "react-youtube";
 import { PiCopySimple } from "react-icons/pi";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -13,12 +15,29 @@ const Index = () => {
   const [warning, setWarning] = React.useState<boolean>(false);
   const [copied, setCopied] = React.useState<boolean>(false);
 
-  const handleGenerateSummary = () => {
+  function getYouTubeVideoId(url: string) {
+    const videoIdMatch = url.match(
+      /(?:\?v=|&v=|youtu\.be\/|embed\/|\/videos\/|\/watch\?v=|\/watch\?feature=player_embed&v=)([^#\&\?]*).*/
+    );
+
+    if (videoIdMatch && videoIdMatch[1]) {
+      return videoIdMatch[1];
+    }
+
+    return null;
+  }
+
+  const handleGenerateSummary = async () => {
     // check if the input value is a valid youtube url
     if (inputValue.startsWith("https://youtu.be/")) {
       setValidURL(true);
       setTextareaVisible(true);
       setWarning(false);
+
+      await axios.get(
+        "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
+      );
+
       setSummaryContent(
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit."
       );
@@ -44,8 +63,8 @@ const Index = () => {
           <div
             className={`${
               isValidURL && !warning
-                ? "sm:w-10/12 sm:mt-0 md:pt-0 lg:w-full lg:items-start 2xl:pl-7 max-w-2xl h-96 rounded-2xl border-none border-4 pt-4 mx-auto"
-                : "sm:w-10/12 sm:mt-0 md:pt-0 md:mt-0 lg:w-full lg:items-start lg:mt-0 max-w-2xl h-96 rounded-2xl border-dashed border-slate-800 border-4 pt-4 mt-6 mx-auto"
+                ? "sm:w-10/12 sm:mt-0 md:pt-0 lg:w-full lg:h-80 lg:items-start 2xl:pl-7 max-w-2xl h-96 rounded-2xl border-none border-4 pt-4 mx-auto"
+                : "sm:w-10/12 sm:mt-0 md:pt-0 md:mt-0 lg:w-full lg:h-80 lg:items-start lg:mt-0 max-w-2xl h-96 rounded-2xl border-dashed border-slate-800 border-4 pt-4 mt-6 mx-auto"
             }`}
           >
             {isValidURL && !warning ? (
@@ -63,7 +82,7 @@ const Index = () => {
           <div
             className={`sm:w-10/12 sm:m-auto sm:mb-8 lg:w-full max-w-screen-sm  ${
               isTextareaVisible ? "h-full" : ""
-            } flex justify-between flex-col rounded-2xl border-solid border-indigo-950 bg-indigo-950 border-4 p-4`}
+            } flex justify-between flex-col rounded-2xl border-solid border-none bg-indigo-950 border-4 p-4`}
           >
             <div className="sm:flex-row w-full flex flex-col justify-between gap-4">
               <input
@@ -89,7 +108,7 @@ const Index = () => {
                 cols={30}
                 rows={10}
                 readOnly
-                className="bg-transparent mt-6 resize-none focus:outline-none text-slate-400 pr-4 text-justify"
+                className="bg-transparent mt-6 resize-none focus:outline-none text-slate-400 pr-4 text-justify lg:h-44"
                 defaultValue={summaryContent}
               ></textarea>
             )}

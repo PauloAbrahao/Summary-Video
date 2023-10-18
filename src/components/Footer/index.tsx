@@ -1,6 +1,6 @@
 const index = () => {
   return (
-    <footer className="sm:fixed text-white py-4 text-center relative bottom-0 w-full">
+    <footer className="sm:absolute text-white py-4 text-center  bottom-0 w-full">
       <article className="flex flex-row gap-1 justify-center font-mono	">
         <p>Desenvolvido por </p>
         <a
