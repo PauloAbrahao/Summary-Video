@@ -1,11 +1,15 @@
 import React, { ChangeEvent } from "react";
 
 import axios from "axios";
+import dotenv from "dotenv";
 import { transcribeAudio } from "../../services/transcribe/";
 
 import YouTube from "react-youtube";
 import { PiCopySimple } from "react-icons/pi";
 import CopyToClipboard from "react-copy-to-clipboard";
+
+dotenv.config();
+const apiKey = process.env.OPENAI_API_KEY;
 
 const Index = () => {
   const [isTextareaVisible, setTextareaVisible] =
@@ -35,16 +39,15 @@ const Index = () => {
       setTextareaVisible(true);
       setWarning(false);
 
-      // await axios.get(
-      //   "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
-      // );
+      await axios.get(
+        "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
+      );
 
       const data = await transcribeAudio();
-      console.log('data', data);
+      console.log("data", data);
+      console.log(data.text);
 
-      setSummaryContent(
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      );
+      setSummaryContent(data.text);
     } else {
       setValidURL(false);
       setWarning(true);
