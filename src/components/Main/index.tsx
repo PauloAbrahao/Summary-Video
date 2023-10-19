@@ -1,15 +1,11 @@
 import React, { ChangeEvent } from "react";
 
 import axios from "axios";
-import dotenv from "dotenv";
 import { transcribeAudio } from "../../services/transcribe/";
 
 import YouTube from "react-youtube";
 import { PiCopySimple } from "react-icons/pi";
 import CopyToClipboard from "react-copy-to-clipboard";
-
-dotenv.config();
-const apiKey = process.env.OPENAI_API_KEY;
 
 const Index = () => {
   const [isTextareaVisible, setTextareaVisible] =
@@ -39,19 +35,29 @@ const Index = () => {
       setTextareaVisible(true);
       setWarning(false);
 
-      await axios.get(
-        "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
-      );
+      // await axios.get(
+      //   "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
+      // );
 
-      const data = await transcribeAudio();
-      console.log("data", data);
-      console.log(data.text);
+      // const data = await transcribeAudio();
 
-      setSummaryContent(data.text);
+      // await handleGetSummary(data.text);
+      await handleGetSummary();
     } else {
       setValidURL(false);
       setWarning(true);
     }
+  };
+
+  // const handleGetSummary = async (data: string) => {
+  //   const responseData = await axios.post("http://localhost:3333/gen-summary", {
+  //     text: data,
+  //   });
+  // };
+
+  const handleGetSummary = async () => {
+    const responseData = await axios.post("http://localhost:3333/gen-summary");
+    console.log('responseData', responseData.data);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
