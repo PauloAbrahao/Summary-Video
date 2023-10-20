@@ -8,6 +8,7 @@ import { PiCopySimple } from "react-icons/pi";
 import CopyToClipboard from "react-copy-to-clipboard";
 
 const apiKey = import.meta.env.RAPID_API_CHATGPT_KEY;
+console.log("apiKey", apiKey);
 
 const Index = () => {
   const [isTextareaVisible, setTextareaVisible] =
@@ -57,7 +58,7 @@ const Index = () => {
       url: "https://simple-chatgpt-api.p.rapidapi.com/ask",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "44109bc813msh96b16808370c0aap1b81c2jsn7996b2f15dc7",
+        "X-RapidAPI-Key": apiKey,
         "X-RapidAPI-Host": "simple-chatgpt-api.p.rapidapi.com",
       },
       data: {
