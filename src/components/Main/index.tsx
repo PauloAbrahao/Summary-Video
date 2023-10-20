@@ -7,6 +7,9 @@ import YouTube from "react-youtube";
 import { PiCopySimple } from "react-icons/pi";
 import CopyToClipboard from "react-copy-to-clipboard";
 
+const apiKey = import.meta.env.RAPID_API_CHATGPT_KEY;
+console.log("apiKey", apiKey);
+
 const Index = () => {
   const [isTextareaVisible, setTextareaVisible] =
     React.useState<boolean>(false);
@@ -35,19 +38,41 @@ const Index = () => {
       setTextareaVisible(true);
       setWarning(false);
 
-      // await axios.get(
-      //   "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
-      // );
+      await axios.get(
+        "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
+      );
 
       const data = await transcribeAudio();
-      console.log('data', data);
 
-      setSummaryContent(
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit.lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      );
+      await handleGetSummary(data.text);
+      // await handleGetSummary();
     } else {
       setValidURL(false);
       setWarning(true);
+    }
+  };
+
+  const handleGetSummary = async (prompt: string) => {
+    const options = {
+      method: "POST",
+      url: "https://simple-chatgpt-api.p.rapidapi.com/ask",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": apiKey,
+        "X-RapidAPI-Host": "simple-chatgpt-api.p.rapidapi.com",
+      },
+      data: {
+        question: `Escreva um resumo sobre o conteúdo do texto a seguir: ${prompt}`,
+      },
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data.answer);
+
+      setSummaryContent(response.data.answer);
+    } catch (error) {
+      console.error(error);
     }
   };
 

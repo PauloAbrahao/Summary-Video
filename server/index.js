@@ -1,11 +1,15 @@
-import express from "express";
 import cors from "cors";
-import { downloader } from "./download-video.js";
+import axios from "axios";
+// import OpenAI from "openai";
+import express from "express";
+import bodyParser from "body-parser";
+
 import { createMP3 } from "./create-mp3.js";
+import { downloader } from "./download-video.js";
 
 const app = express();
-
 app.use(cors());
+app.use(bodyParser.json());
 
 app.get("/audio", async (req, res) => {
   const videoId = req.query.v;
@@ -15,6 +19,7 @@ app.get("/audio", async (req, res) => {
     await downloader(videoId);
     // create mp3
     await createMP3();
+
     return res.send("ok");
   } catch (error) {
     console.log(error);
