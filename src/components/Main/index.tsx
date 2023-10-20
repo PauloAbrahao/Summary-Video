@@ -7,6 +7,8 @@ import YouTube from "react-youtube";
 import { PiCopySimple } from "react-icons/pi";
 import CopyToClipboard from "react-copy-to-clipboard";
 
+const apiKey = import.meta.env.RAPID_API_CHATGPT_KEY;
+
 const Index = () => {
   const [isTextareaVisible, setTextareaVisible] =
     React.useState<boolean>(false);
@@ -35,29 +37,42 @@ const Index = () => {
       setTextareaVisible(true);
       setWarning(false);
 
-      // await axios.get(
-      //   "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
-      // );
+      await axios.get(
+        "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
+      );
 
-      // const data = await transcribeAudio();
+      const data = await transcribeAudio();
 
-      // await handleGetSummary(data.text);
-      await handleGetSummary();
+      await handleGetSummary(data.text);
+      // await handleGetSummary();
     } else {
       setValidURL(false);
       setWarning(true);
     }
   };
 
-  // const handleGetSummary = async (data: string) => {
-  //   const responseData = await axios.post("http://localhost:3333/gen-summary", {
-  //     text: data,
-  //   });
-  // };
+  const handleGetSummary = async (prompt: string) => {
+    const options = {
+      method: "POST",
+      url: "https://simple-chatgpt-api.p.rapidapi.com/ask",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": "44109bc813msh96b16808370c0aap1b81c2jsn7996b2f15dc7",
+        "X-RapidAPI-Host": "simple-chatgpt-api.p.rapidapi.com",
+      },
+      data: {
+        question: `Escreva um resumo sobre o conteúdo do texto a seguir: ${prompt}`,
+      },
+    };
 
-  const handleGetSummary = async () => {
-    const responseData = await axios.post("http://localhost:3333/gen-summary");
-    console.log('responseData', responseData.data);
+    try {
+      const response = await axios.request(options);
+      console.log(response.data.answer);
+
+      setSummaryContent(response.data.answer);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
