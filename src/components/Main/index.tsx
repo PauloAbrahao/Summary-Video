@@ -60,13 +60,12 @@ const Index = () => {
         "X-RapidAPI-Host": "simple-chatgpt-api.p.rapidapi.com",
       },
       data: {
-        question: `Escreva um resumo sobre o conteúdo do texto a seguir: ${prompt}`,
+        question: `Escreva um resumo sobre o conteúdo do vídeo transcrito a seguir: ${prompt}`,
       },
     };
 
     try {
       const response = await axios.request(options);
-      console.log(response.data.answer);
 
       setSummaryContent(response.data.answer);
     } catch (error) {

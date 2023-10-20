@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 
 import { createMP3 } from "./create-mp3.js";
 import { downloader } from "./download-video.js";
-import { transcribeAudio } from "./transcribe-azure.js";
 
 const app = express();
 app.use(cors());
