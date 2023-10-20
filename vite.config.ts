@@ -1,9 +1,9 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { config } from "dotenv";
+import { defineConfig, loadEnv } from "vite";
 
-config();
+export default ({ mode }) => {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
-export default defineConfig({
-  plugins: [react()],
-});
+  return defineConfig({
+    // To access env vars here use process.env.TEST_VAR
+  });
+};

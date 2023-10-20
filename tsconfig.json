@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "server/transcribe-azure.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

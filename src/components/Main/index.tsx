@@ -7,8 +7,7 @@ import YouTube from "react-youtube";
 import { PiCopySimple } from "react-icons/pi";
 import CopyToClipboard from "react-copy-to-clipboard";
 
-const apiKey = import.meta.env.RAPID_API_CHATGPT_KEY;
-console.log("apiKey", apiKey);
+const apiKey = import.meta.env.VITE_RAPID_API_CHATGPT_KEY;
 
 const Index = () => {
   const [isTextareaVisible, setTextareaVisible] =
@@ -31,7 +30,7 @@ const Index = () => {
     return null;
   }
 
-  const handleGenerateSummary = async () => {
+  const handleTranscribeSpeechToText = async () => {
     // check if the input value is a valid youtube url
     if (inputValue.startsWith("https://youtu.be/")) {
       setValidURL(true);
@@ -44,15 +43,14 @@ const Index = () => {
 
       const data = await transcribeAudio();
 
-      await handleGetSummary(data.text);
-      // await handleGetSummary();
+      await handleGenerateSummary(data.text);
     } else {
       setValidURL(false);
       setWarning(true);
     }
   };
 
-  const handleGetSummary = async (prompt: string) => {
+  const handleGenerateSummary = async (prompt: string) => {
     const options = {
       method: "POST",
       url: "https://simple-chatgpt-api.p.rapidapi.com/ask",
@@ -125,7 +123,7 @@ const Index = () => {
 
               <button
                 className="sm:w-4/12 w-full h-fit bg-indigo-700 text-white py-3 px-4 rounded-md"
-                onClick={handleGenerateSummary}
+                onClick={handleTranscribeSpeechToText}
               >
                 Gerar resumo
               </button>
