@@ -15,6 +15,7 @@ export const createMP3 = () =>
       .outputOptions("-ab", "20k")
 
       // Output file
+      // .saveToFile("audio.mp3")
       .saveToFile("audio.mp3")
 
       // The callback that is run when FFmpeg is finished

@@ -1,6 +1,4 @@
 import cors from "cors";
-import axios from "axios";
-// import OpenAI from "openai";
 import express from "express";
 import bodyParser from "body-parser";
 
