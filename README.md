@@ -1,28 +1,41 @@
-# React + TypeScript + Vite
+# Summary Video
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h2> Sobre </h2>
+<h3> Summary Video é um aplicativo web para gerar resumos de vídeos do youtube. </h3>
 
-Currently, two official plugins are available:
+## Instalação
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para rodar essa aplicação em sua máquina, primeiro clone o repositório:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+  git clone https://github.com/PauloAbrahao/Summary-Video.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-# Summary-Video
+Então, navegue para o repositório e instale as dependências:
+
+```bash
+  cd summary-video
+```
+
+```bash
+  npm install
+```
+
+Finalmente, inicie a aplicação (Vite js):
+
+```bash
+  npm run dev
+```
+
+<p align="center">
+  <img src="./src/assets/app.png" width="700" >
+  <img src="./src/assets/response.png" width="700" >
+</p>
+
+## 💻 Tecnologias usadas nesse projeto:
+
+- React JS
+- Typescript
+- Tailwind Css
+- Open AI api
+- Transformers js
