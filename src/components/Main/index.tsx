@@ -9,6 +9,18 @@ import CopyToClipboard from "react-copy-to-clipboard";
 
 const apiKey = import.meta.env.VITE_RAPID_API_CHATGPT_KEY;
 
+export function getYouTubeVideoId(url: string) {
+  const videoIdMatch = url.match(
+    /(?:\?v=|&v=|youtu\.be\/|embed\/|\/videos\/|\/watch\?v=|\/watch\?feature=player_embed&v=)([^#\&\?]*).*/
+  );
+
+  if (videoIdMatch && videoIdMatch[1]) {
+    return videoIdMatch[1];
+  }
+
+  return null;
+}
+
 const Index = () => {
   const [isTextareaVisible, setTextareaVisible] =
     React.useState<boolean>(false);
@@ -18,25 +30,24 @@ const Index = () => {
   const [warning, setWarning] = React.useState<boolean>(false);
   const [copied, setCopied] = React.useState<boolean>(false);
 
-  function getYouTubeVideoId(url: string) {
-    const videoIdMatch = url.match(
-      /(?:\?v=|&v=|youtu\.be\/|embed\/|\/videos\/|\/watch\?v=|\/watch\?feature=player_embed&v=)([^#\&\?]*).*/
-    );
-
-    if (videoIdMatch && videoIdMatch[1]) {
-      return videoIdMatch[1];
-    }
-
-    return null;
-  }
-
-  const handleTranscribeSpeechToText = async () => {
+  const handleVerification = () => {
     // check if the input value is a valid youtube url
     if (inputValue.startsWith("https://youtu.be/")) {
       setValidURL(true);
       setTextareaVisible(true);
       setWarning(false);
 
+      return true;
+    } else {
+      setValidURL(false);
+      setWarning(true);
+
+      return false;
+    }
+  };
+
+  const handleTranscribeSpeechToText = async () => {
+    if (handleVerification() === true) {
       await axios.get(
         "http://localhost:3333/audio?v=" + getYouTubeVideoId(inputValue)
       );
@@ -44,30 +55,34 @@ const Index = () => {
       const data = await transcribeAudio();
 
       await handleGenerateSummary(data.text);
-    } else {
-      setValidURL(false);
-      setWarning(true);
+      // setSummaryContent(
+      //   "No vídeo, o apresentador explica como baixar vídeos do YouTube pelo computador. Ele orienta os espectadores a irem para a tela inicial do YouTube e pesquisarem o vídeo desejado. Na tela de exibição do vídeo, ele mostra que há uma opção de download ao clicar nos três pontos. Além disso, ele menciona que é possível baixar vídeos em alta qualidade. O apresentador também menciona a opção de testar gratuitamente o YouTube Premium por 30 dias, que permite baixar qualquer vídeo do YouTube no computador. Ele explica como localizar os vídeos baixados na biblioteca, acessando a área de download, onde é possível ver o histórico de downloads de vídeos do YouTube."
+      // );
     }
+    return;
   };
 
   const handleGenerateSummary = async (prompt: string) => {
     const options = {
       method: "POST",
-      url: "https://simple-chatgpt-api.p.rapidapi.com/ask",
+      url: "https://chatgpt-api8.p.rapidapi.com/",
       headers: {
         "content-type": "application/json",
         "X-RapidAPI-Key": apiKey,
-        "X-RapidAPI-Host": "simple-chatgpt-api.p.rapidapi.com",
+        "X-RapidAPI-Host": "chatgpt-api8.p.rapidapi.com",
       },
-      data: {
-        question: `Escreva um resumo sobre o conteúdo do vídeo transcrito a seguir: ${prompt}`,
-      },
+      data: [
+        {
+          content: `Escreva um resumo sobre o conteúdo do vídeo transcrito a seguir: ${prompt}`,
+          role: "user",
+        },
+      ],
     };
 
     try {
       const response = await axios.request(options);
 
-      setSummaryContent(response.data.answer);
+      setSummaryContent(response.data.text);
     } catch (error) {
       console.error(error);
     }
