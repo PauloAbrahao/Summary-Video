@@ -102,6 +102,7 @@ const Index = () => {
       <section className="sm:w-11/12 sm:flex-col-reverse lg:flex-row lg:gap-8 2xl:w-3/5 flex flex-col-reverse justify-around m-auto">
         <article className="w-full lg:w-6/12">
           <div
+            data-testid="rectangle"
             className={`${
               isValidURL && !warning
                 ? "sm:w-10/12 sm:mt-0 md:pt-0 lg:w-full lg:h-80 lg:items-start 2xl:pl-7 max-w-2xl h-96 rounded-2xl border-none border-4 pt-4 mx-auto"
